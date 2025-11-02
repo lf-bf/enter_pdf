@@ -23,12 +23,43 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+**Enter PDF** - A NestJS application for intelligent PDF information extraction using AI. This service extracts specific information from PDF documents based on custom schemas, supporting various document types like reports, certificates, contracts, and more.
+
+## Features
+
+- 🤖 **AI-Powered Extraction** - Uses OpenAI GPT models for intelligent information extraction
+- 📄 **PDF Processing** - Supports various PDF formats using LangChain PDF loaders
+- 🔧 **Custom Schemas** - Define exactly which information to extract using JSON schemas
+- 📝 **Multiple Document Types** - Handles reports, certificates, contracts, and more
+- ✅ **Validation** - Input validation using class-validator
+- 🏗️ **NestJS Architecture** - Scalable and maintainable structure
+
+## Technologies Used
+
+- **NestJS** - Progressive Node.js framework
+- **TypeScript** - Type-safe development
+- **OpenAI API** - GPT models for text extraction
+- **LangChain** - PDF processing and document loading
+- **Class Validator** - Request validation
+- **Class Transformer** - Data transformation
 
 ## Project setup
 
 ```bash
 $ npm install
+```
+
+## Environment Configuration
+
+Create a `.env` file in the root directory:
+
+```env
+# OpenAI Configuration
+OPENAI_API_KEY=your_openai_api_key_here
+OPENAI_MODEL=gpt-4o-mini
+
+# Application Configuration
+PORT=3000
 ```
 
 ## Compile and run the project
@@ -44,55 +75,91 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
-## Run tests
+## API Endpoints
+
+### Extract PDF Information
+
+**POST** `/extract`
+
+Extracts information from PDF documents based on a provided schema.
+
+#### Request Body (Required)
+- `label` (string) - Document type (e.g., "report", "certificate", "contract")
+- `extraction_schema` (object) - JSON schema defining which information to extract
+- `pdf` (string) - Path to the PDF file or PDF content
+
+#### Example Request
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+curl -X POST http://localhost:3002/api/extract \
+  -H "Content-Type: application/json" \
+  -d '{
+    "label": "certificate",
+    "extraction_schema": {
+      "name": "",
+      "date": "",
+      "number": ""
+    },
+    "pdf": "/path/to/document.pdf"
+  }'
 ```
 
-## Deployment
+#### Example Response
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+```json
+{
+  "name": "João Silva",
+  "date": "2024-01-15",
+  "number": "123456"
+}
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+#### Advanced Schema Examples
 
-## Resources
+**Certificate Extraction:**
+```json
+{
+  "name": "",
+  "document_number": "",
+  "issue_date": "",
+  "expiry_date": "",
+  "issuing_authority": ""
+}
+```
 
-Check out a few resources that may come in handy when working with NestJS:
+**Contract Extraction:**
+```json
+{
+  "parties": [],
+  "contract_value": "",
+  "start_date": "",
+  "end_date": "",
+  "terms": []
+}
+```
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+**Report Extraction:**
+```json
+{
+  "instituicao_ensino": {
+    "nome": "Nome da instituição de ensino",
+    "cnpj": "CNPJ da instituição de ensino",
+    "inscricao_estadual": "Inscrição Estadual da instituição, que pode ser um número ou 'ISENTO'",
+    "endereco": "Endereço completo da instituição",
+    "telefone": "Telefone de contato da instituição",
+    "site": "Website oficial da instituição"
+  },
+  "responsavel_financeiro": {
+    "nome": "Nome completo do responsável financeiro ou do aluno",
+    "matricula": "Número de matrícula do aluno",
+    "cpf": "CPF do responsável financeiro ou do aluno",
+    "endereco": "Endereço completo do pagador"
+  },
+  "cobranca": {
+    "valor_mensalidade": "Valor total da mensalidade a ser paga",
+    "numero_titulo": "Número de identificação do título da cobrança",
+    "data_vencimento": "Data limite para o pagamento do boleto"
+  }
+}
+```
 
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
