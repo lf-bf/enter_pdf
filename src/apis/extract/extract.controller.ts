@@ -6,10 +6,22 @@ import { SendExtractionDto } from './dtos/send_extraction.dto';
 export class ExtractController {
   constructor(private readonly extractService: ExtractService) {}
 
-  @Post()
+  @Post('main')
   async extractFromPdf(@Body() body: SendExtractionDto) {
-    console.log('Received extraction request with body:', body);
+
     return this.extractService.processPdf(body);
+  }
+
+  @Post('optmized')
+  async extractFromPdfOptimized(@Body() body: SendExtractionDto) {
+
+    return this.extractService.processPdfOptimized(body);
+  }
+
+  @Post('local')
+  async extractFromPdfLocal(@Body() body: SendExtractionDto) {
+  
+    return this.extractService.processPdfLocal(body);
   }
 
 }
