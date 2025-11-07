@@ -1,0 +1,154 @@
+{
+  "endpoint": "optmized",
+  "batch_size": 50,
+  "base_url": "http://localhost:3004/api",
+  "timestamp": "2025-11-06T23:22:35.117499",
+  "summary": {
+    "total_requests": 7,
+    "successful": 7,
+    "failed": 0
+  },
+  "results": [
+    {
+      "index": 0,
+      "pdf_file": "Boleto_Outubro.pdf",
+      "label": "boleto_academico",
+      "status_code": 201,
+      "response_time_seconds": 5.597,
+      "success": true,
+      "response_size": 622,
+      "timestamp": "2025-11-06T23:22:35.116666",
+      "response_data": {
+        "instituicao_ensino": {
+          "nome": "Associação Paranaense de Cultura - APC",
+          "cnpj": "76.659.820/0001-51",
+          "inscricao_estadual": "ISENTO",
+          "endereco": "Rua Imaculada Conceição, 1155 - Prado Velho CEP 80215901 - Curitiba - PR",
+          "telefone": "(41) 3271-1555",
+          "site": "http://www.pucpr.br/"
+        },
+        "responsavel_financeiro": {
+          "nome": "Luiz Fernando Brasão da Fonseca Martins",
+          "matricula": "",
+          "cpf": "",
+          "endereco": null
+        },
+        "cobranca": {
+          "valor_mensalidade": "",
+          "numero_titulo": "",
+          "data_vencimento": "06/11/2025"
+        }
+      }
+    },
+    {
+      "index": 1,
+      "pdf_file": "oab_1.pdf",
+      "label": "carteira_oab",
+      "status_code": 201,
+      "response_time_seconds": 4.16,
+      "success": true,
+      "response_size": 323,
+      "timestamp": "2025-11-06T23:22:33.685118",
+      "response_data": {
+        "nome": "JOANA D'ARC",
+        "inscricao": "101943",
+        "seccional": "PR",
+        "subsecao": "CONSELHO SECCIONAL - PARANÁ",
+        "categoria": "SUPLEMENTAR",
+        "endereco_profissional": "AVENIDA PAULISTA, Nº 2300 andar Pilotis, Bela Vista, SÃO PAULO - SP, 01310300",
+        "telefone_profissional": null,
+        "situacao": "SITUAÇÃO REGULAR"
+      }
+    },
+    {
+      "index": 2,
+      "pdf_file": "oab_2.pdf",
+      "label": "carteira_oab",
+      "status_code": 201,
+      "response_time_seconds": 3.341,
+      "success": true,
+      "response_size": 305,
+      "timestamp": "2025-11-06T23:22:32.866828",
+      "response_data": {
+        "nome": "LUIS FILIPE ARAUJO AMARAL",
+        "inscricao": "101943PR",
+        "seccional": "CONSELHO SECCIONAL - PARANÁ",
+        "subsecao": null,
+        "categoria": "SUPLEMENTAR",
+        "endereco_profissional": "AVENIDA PAULISTA, Nº 2300 andar Pilotis, Bela Vista, SÃO PAULO - SP 01310300",
+        "situacao": "SITUAÇÃO REGULAR"
+      }
+    },
+    {
+      "index": 3,
+      "pdf_file": "oab_3.pdf",
+      "label": "carteira_oab",
+      "status_code": 201,
+      "response_time_seconds": 3.954,
+      "success": true,
+      "response_size": 211,
+      "timestamp": "2025-11-06T23:22:33.479219",
+      "response_data": {
+        "nome": "SON GOKU",
+        "inscricao": "101943",
+        "seccional": "PR",
+        "subsecao": "CONSELHO SECCIONAL - PARANÁ",
+        "categoria": "SUPLEMENTAR",
+        "telefone_profissional": "K",
+        "situacao": "SITUAÇÃO REGULAR"
+      }
+    },
+    {
+      "index": 4,
+      "pdf_file": "tela_sistema_1.pdf",
+      "label": "tela_sistema",
+      "status_code": 201,
+      "response_time_seconds": 2.519,
+      "success": true,
+      "response_size": 198,
+      "timestamp": "2025-11-06T23:22:32.045031",
+      "response_data": {
+        "data_base": "05/09/2025",
+        "data_verncimento": "12/10/2025",
+        "quantidade_parcelas": "5",
+        "produto": "CONSIGNADO",
+        "sistema": null,
+        "tipo_de_operacao": null,
+        "tipo_de_sistema": null
+      }
+    },
+    {
+      "index": 5,
+      "pdf_file": "tela_sistema_2.pdf",
+      "label": "tela_sistema",
+      "status_code": 201,
+      "response_time_seconds": 1.716,
+      "success": true,
+      "response_size": 142,
+      "timestamp": "2025-11-06T23:22:31.241882",
+      "response_data": {
+        "pesquisa_por": "CLIENTE",
+        "pesquisa_tipo": "CPF",
+        "sistema": "CONSIGNADO",
+        "valor_parcela": "2.372,64",
+        "cidade": "Mozarlândia"
+      }
+    },
+    {
+      "index": 6,
+      "pdf_file": "tela_sistema_3.pdf",
+      "label": "tela_sistema",
+      "status_code": 201,
+      "response_time_seconds": 1.719,
+      "success": true,
+      "response_size": 98,
+      "timestamp": "2025-11-06T23:22:31.244622",
+      "response_data": {
+        "data_referencia": "25/03/2030",
+        "selecao_de_parcelas": "Todos",
+        "total_de_parcelas": 96
+      }
+    }
+  ],
+  "errors": []
+}

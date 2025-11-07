@@ -136,55 +136,62 @@ function selectBestUniqueChunks(results: ParseResult[]): string[] {
 }
 
 /**
- * Extrai todas as chaves e sub-chaves recursivamente do schema.
- * Foca especialmente nas folhas da árvore onde os valores serão inseridos.
+ * Extrai apenas as chaves compostas (com contexto) do schema.
+ * Evita duplicação entre chaves simples e compostas, focando nas mais específicas.
  * 
  * @param schema - Schema de extração (objeto, array ou valor primitivo)
  * @param parentKey - Chave pai para construir chaves compostas
- * @returns Array com todas as chaves únicas encontradas
+ * @returns Array com chaves específicas e contextuais
  */
 function extractAllKeys(schema: any, parentKey = ''): string[] {
-  const keys: string[] = [];
+  const leafKeys: Set<string> = new Set(); // Chaves finais (folhas)
+  const contextKeys: Set<string> = new Set(); // Chaves de contexto (objetos)
   
-  if (Array.isArray(schema)) {
-    // Para arrays, usar a chave pai se existir
-    if (parentKey) {
-      keys.push(parentKey);
-    }
-  } else if (typeof schema === 'object' && schema !== null) {
-    // Para objetos, extrair chaves recursivamente
-    for (const key in schema) {
-      if (schema.hasOwnProperty(key)) {
-        const fullKey = parentKey ? `${parentKey}.${key}` : key;
-        
-        // Verificar se é uma folha (valor final onde será inserido o dado)
-        const value = schema[key];
-        if (typeof value === 'string' || value === null || value === undefined) {
-          // É uma folha - adicionar chave simples e composta
-          keys.push(key, fullKey);
-        } else {
-          // Não é folha - adicionar chave e continuar recursão
-          keys.push(key, fullKey);
-          keys.push(...extractAllKeys(value, fullKey));
+  function traverse(obj: any, currentPath = ''): void {
+    if (Array.isArray(obj)) {
+      if (currentPath) {
+        contextKeys.add(currentPath);
+      }
+    } else if (typeof obj === 'object' && obj !== null) {
+      for (const key in obj) {
+        if (obj.hasOwnProperty(key)) {
+          const fullPath = currentPath ? `${currentPath}.${key}` : key;
+          const value = obj[key];
+          
+          if (typeof value === 'string' || value === null || value === undefined) {
+            // É uma folha - usar caminho completo se disponível, senão chave simples
+            leafKeys.add(fullPath);
+          } else if (typeof value === 'object') {
+            // É um objeto - adicionar como contexto apenas se for nível superior
+            if (!currentPath) {
+              contextKeys.add(key);
+            }
+            traverse(value, fullPath);
+          }
         }
       }
     }
-  } else {
-    // Valor primitivo - usar parentKey se existir
-    if (parentKey) {
-      keys.push(parentKey);
-    }
   }
   
-  // Remover duplicatas e chaves vazias, priorizar chaves específicas
-  const uniqueKeys = [...new Set(keys.filter(key => key && key.length > 1))];
+  traverse(schema, parentKey);
   
-  // Ordenar por especificidade (chaves compostas primeiro)
-  return uniqueKeys.sort((a, b) => {
-    const aDepth = a.split('.').length;
-    const bDepth = b.split('.').length;
-    return bDepth - aDepth; // Chaves mais específicas primeiro
-  });
+  // Combinar chaves de contexto e folhas, priorizando folhas
+  const allKeys = [...leafKeys, ...contextKeys]
+    .filter(key => key.length > 1)
+    .sort((a, b) => {
+      // Priorizar chaves com ponto (mais específicas)
+      const aHasDot = a.includes('.');
+      const bHasDot = b.includes('.');
+      
+      if (aHasDot && !bHasDot) return -1;
+      if (!aHasDot && bHasDot) return 1;
+      
+      // Ordenar por comprimento
+      return b.length - a.length;
+    });
+  
+  console.log(`Extracted ${allKeys.length} focused keys:`, allKeys);
+  return allKeys;
 }
 
 /**

@@ -18,7 +18,7 @@ export class ExtractController {
     return this.extractService.processPdfOptimized(body);
   }
 
-  @Post('local')
+  @Post('optimized-v2')
   async extractFromPdfLocal(@Body() body: SendExtractionDto) {
   
     return this.extractService.processPdfLocal(body);

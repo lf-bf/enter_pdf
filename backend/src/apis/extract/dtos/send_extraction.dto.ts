@@ -22,5 +22,5 @@ export class SendExtractionDto {
 
     @IsNotEmpty()
     @IsString()
-    pdf: string;
+    pdf_path: string;
 }

@@ -17,19 +17,19 @@ export class ExtractService {
 
   async processPdf(body: SendExtractionDto) {
     // Carrega o PDF uma vez e passa o conteúdo para o repository
-    const pdfContent = await this.loadPdfContent(body.pdf);
+    const pdfContent = await this.loadPdfContent(body.pdf_path);
     return this.extractRepository.sendPdfMain(body, pdfContent);
   }
 
   async processPdfOptimized(body: SendExtractionDto) {
     // Carrega o PDF uma vez e passa o conteúdo para o repository
-    const pdfContent = await this.loadPdfContent(body.pdf);
+    const pdfContent = await this.loadPdfContent(body.pdf_path);
     return this.extractRepository.sendPdfOptimized(body, pdfContent);
   }
 
   async processPdfLocal(body: SendExtractionDto) {
     // Carrega o PDF uma vez e passa o conteúdo para o repository
-    const pdfContent = await this.loadPdfContent(body.pdf);
+    const pdfContent = await this.loadPdfContent(body.pdf_path);
     return this.extractRepository.sendPdfLocal(body, pdfContent);
   }
 }

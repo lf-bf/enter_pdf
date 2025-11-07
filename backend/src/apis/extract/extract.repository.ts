@@ -1,17 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { ChatOpenAI } from "@langchain/openai";
-import { CallbackHandler } from "@langfuse/langchain";
 import { SendExtractionDto } from './dtos/send_extraction.dto';
 import { extractSchemaSkeleton } from '../../core/utils/extractionSkeleton';
 import { semanticSearchTransformers } from '../../core/utils/semanticSearchTransformers';
 import { localParsingStrategy } from '../../core/utils/semanticSearchLocal';
-import { CacheService } from '../../core/cache/cache.service';
-import { z } from 'zod';
 
 
 @Injectable()
 export class ExtractRepository {
-  constructor(private readonly cacheService: CacheService) {}
+  constructor() {}
 
 
   async sendPdfMain(body: SendExtractionDto, pdfContent: string) {
@@ -32,20 +29,24 @@ export class ExtractRepository {
       maxChunks: 25     // Mais chunks para melhor cobertura
     };
 
-    // Aplicar busca semântica para reduzir o conteúdo do PDF
-    console.log(`[${requestId}] Starting semantic search to summarize PDF content`);
-    //const pdfContentSummarized = await semanticSearchTransformers(pdfContent, schemaSkeletonObject);
-    const pdfContentSummarized = await localParsingStrategy(pdfContent, schemaSkeletonObject, localConfig);
-    console.log(`[${requestId}] Semantic search completed. Original content: ${pdfContent.length} chars, Summarized: ${pdfContentSummarized.length} chars`);
+    // Aplicar busca semântica para reduzir o conteúdo do PDF somente se tiver tamanho maior que 1000 chars.
+    var pdfContentSummarized = pdfContent;
+    if (pdfContent.length > 1000) {
+      console.log(`[${requestId}] Starting semantic search to summarize PDF content`);
 
-    // Criar schema estruturado para structured output
-    //const extractionSchema = this.createStringSchema(body.extraction_schema);
+      pdfContentSummarized = await localParsingStrategy(pdfContent, schemaSkeletonObject, localConfig);
+
+      console.log(pdfContentSummarized)
+      console.log(`[${requestId}] Semantic search completed. Original content: ${pdfContent.length} chars, Summarized: ${pdfContentSummarized.length} chars`);
+    }
     
-
+    // Claibra o modelo ChatOpenAI com GPT-5 Mini e configuração de reasoning para evitar repsonses demoradas
     const llm = new ChatOpenAI({
         apiKey: process.env.OPENAI_API_KEY,
         model: "gpt-5-mini-2025-08-07",
-        
+        reasoning: {
+            effort: "low"
+        }
     });
     
     //Prompt em Markdown
@@ -90,8 +91,6 @@ export class ExtractRepository {
     
     // Log detalhado da resposta e informações de tokens
     console.log(`[${requestId}] Raw response:`, response.content);
-    console.log(`[${requestId}] Response type:`, typeof response.content);
-    console.log(`[${requestId}] Response keys:`, Object.keys(response.content || {}));
     
     // Logs de tokens e logprobs
     if (response.response_metadata) {
@@ -105,7 +104,6 @@ export class ExtractRepository {
     
     console.timeEnd(`[${requestId}] Total extraction time`);
     console.log(`[${requestId}] PDF extraction completed in ${executionTimeSeconds.toFixed(2)} seconds`);
-    console.log(`[${requestId}] Response JSON:`, JSON.stringify(response.content, null, 2));
 
     return response.content;
   }
@@ -210,7 +208,7 @@ export class ExtractRepository {
     const requestId = `local-extraction-${Date.now()}`;
     
     console.log(`[${requestId}] Starting LOCAL PDF extraction for document type: ${body.label}`);
-    console.time(`[${requestId}] Total local extraction time`);
+    console.time(`[${requestId}] Total extraction time`);
 
     console.log(`[${requestId}] PDF content loaded: ${pdfContent.length} characters`);
 
@@ -225,11 +223,16 @@ export class ExtractRepository {
     const schemaSkeletonObject = extractSchemaSkeleton(body.extraction_schema);
     const schemaSkeleton = JSON.stringify(schemaSkeletonObject, null, 2);
 
-    console.log(`[${requestId}] Starting local parsing strategy`);
-    const extractedData = await localParsingStrategy(pdfContent, schemaSkeletonObject, localConfig);
+    // Aplicar busca semântica para reduzir o conteúdo do PDF somente se tiver tamanho maior que 1000 chars.
+    var pdfContentSummarized = pdfContent;
+    if (pdfContent.length > 1000) {
+      console.log(`[${requestId}] Starting semantic search to summarize PDF content`);
 
-    console.log(extractedData)
-    console.log(`[${requestId}] Semantic search completed. Original content: ${pdfContent.length} chars, Summarized: ${extractedData.length} chars`);
+      pdfContentSummarized = await localParsingStrategy(pdfContent, schemaSkeletonObject, localConfig);
+
+      console.log(pdfContentSummarized)
+      console.log(`[${requestId}] Semantic search completed. Original content: ${pdfContent.length} chars, Summarized: ${pdfContentSummarized.length} chars`);
+    }
 
    // Modelo da família 4.x otimizado para usar predicted Outputs
     const llm = new ChatOpenAI({
@@ -272,7 +275,7 @@ export class ExtractRepository {
                 \`\`\`
 
                 **PDF CONTENT:**
-                ${extractedData}
+                ${pdfContentSummarized}
 
                 Extract the information according to the provided schema.`,
         },

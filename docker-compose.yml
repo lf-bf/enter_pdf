@@ -1,0 +1,23 @@
+# Docker Compose para Enter PDF - Production
+
+services:
+  enter-pdf-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: enter-pdf-backend
+    ports:
+      - "3004:3000"
+    environment:
+      - NODE_ENV=production
+      # PORT e OPENAI_API_KEY virão do .env do backend
+    volumes:
+      # Volume para acessar PDFs locais
+      - ./pdfs:/app/pdfs
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
