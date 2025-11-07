@@ -42,7 +42,7 @@ Uma aplicação NestJS para extração inteligente de informações de documento
 
 1. **Clone o repositório**
 ```bash
-git clone <>
+git clone <https://github.com/lf-bf/enter_pdf>
 cd enter_pdf
 ```
 
