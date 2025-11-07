@@ -1,3 +1,3 @@
 # Dependências para o script de teste de endpoints
-aiohttp==3.9.1
+aiohttp
 asyncio

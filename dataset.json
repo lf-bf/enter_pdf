@@ -1,30 +1,5 @@
 [
   {
-    "label": "boleto_academico",
-    "extraction_schema": {
-        "instituicao_ensino": {
-            "nome": "Nome da instituição de ensino",
-            "cnpj": "CNPJ da instituição de ensino",
-            "inscricao_estadual": "Inscrição Estadual da instituição, que pode ser um número ou 'ISENTO'",
-            "endereco": "Endereço completo da instituição",
-            "telefone": "Telefone de contato da instituição",
-            "site": "Website oficial da instituição"
-        },
-        "responsavel_financeiro": {
-            "nome": "Nome completo do responsável financeiro ou do aluno",
-            "matricula": "Número de matrícula do aluno",
-            "cpf": "CPF do responsável financeiro ou do aluno",
-            "endereco": "Endereço completo do pagador"
-        },
-        "cobranca": {
-            "valor_mensalidade": "Valor total da mensalidade a ser paga",
-            "numero_titulo": "Número de identificação do título da cobrança",
-            "data_vencimento": "Data limite para o pagamento do boleto"
-        }
-    },
-    "pdf_path": "Boleto_Outubro.pdf"
-  },
-  {
     "label": "carteira_oab",
     "extraction_schema": {
       "nome": "Nome do profissional, normalmente no canto superior esquerdo da imagem",
@@ -36,7 +11,7 @@
       "telefone_profissional": "Telefone do profissional",
       "situacao": "Situação do profissional, normalmente no canto inferior direito."
     },
-    "pdf_path": "oab_1.pdf"
+    "pdf_path": "OAB_1.pdf"
   },
   {
     "label": "carteira_oab",

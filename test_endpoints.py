@@ -58,7 +58,7 @@ class EndpointTester:
         return {
             "label": item["label"],
             "extraction_schema": item["extraction_schema"],
-            "pdf_path": f"../pdfs/{item['pdf_path']}"
+            "pdf_path": f"/app/pdfs/{item['pdf_path']}"
         }
     
     async def make_request(self, session: aiohttp.ClientSession, item: Dict, index: int) -> Dict:

@@ -2,92 +2,61 @@
   "endpoint": "optmized-v2",
   "batch_size": 50,
   "base_url": "http://localhost:3004/api",
-  "timestamp": "2025-11-06T23:25:05.856320",
+  "timestamp": "2025-11-07T02:44:25.507978",
   "summary": {
-    "total_requests": 7,
-    "successful": 7,
+    "total_requests": 6,
+    "successful": 6,
     "failed": 0
   },
   "results": [
     {
       "index": 0,
-      "pdf_file": "Boleto_Outubro.pdf",
-      "label": "boleto_academico",
-      "status_code": 201,
-      "response_time_seconds": 4.86,
-      "success": true,
-      "response_size": 622,
-      "timestamp": "2025-11-06T23:25:05.854970",
-      "response_data": {
-        "instituicao_ensino": {
-          "nome": "Associação Paranaense de Cultura - APC",
-          "cnpj": "76.659.820/0001-51",
-          "inscricao_estadual": "ISENTO",
-          "endereco": "Rua Imaculada Conceição, 1155 - Prado Velho CEP 80215901 - Curitiba - PR",
-          "telefone": "(41) 3271-1555",
-          "site": "http://www.pucpr.br/"
-        },
-        "responsavel_financeiro": {
-          "nome": "Luiz Fernando Brasão da Fonseca Martins",
-          "matricula": "",
-          "cpf": "",
-          "endereco": null
-        },
-        "cobranca": {
-          "valor_mensalidade": "",
-          "numero_titulo": "",
-          "data_vencimento": "06/11/2025"
-        }
-      }
-    },
-    {
-      "index": 1,
-      "pdf_file": "oab_1.pdf",
+      "pdf_file": "OAB_1.pdf",
       "label": "carteira_oab",
       "status_code": 201,
-      "response_time_seconds": 3.016,
+      "response_time_seconds": 2.953,
       "success": true,
-      "response_size": 322,
-      "timestamp": "2025-11-06T23:25:04.014081",
+      "response_size": 323,
+      "timestamp": "2025-11-07T02:44:25.483842",
       "response_data": {
         "nome": "JOANA D'ARC",
         "inscricao": "101943",
         "seccional": "PR",
         "subsecao": "CONSELHO SECCIONAL - PARANÁ",
         "categoria": "SUPLEMENTAR",
-        "endereco_profissional": "AVENIDA PAULISTA, Nº 2300 andar Pilotis, Bela Vista, SÃO PAULO - SP 01310300",
+        "endereco_profissional": "AVENIDA PAULISTA, Nº 2300 andar Pilotis, Bela Vista, SÃO PAULO - SP, 01310300",
         "telefone_profissional": null,
         "situacao": "SITUAÇÃO REGULAR"
       }
     },
     {
-      "index": 2,
+      "index": 1,
       "pdf_file": "oab_2.pdf",
       "label": "carteira_oab",
       "status_code": 201,
-      "response_time_seconds": 3.096,
+      "response_time_seconds": 2.972,
       "success": true,
-      "response_size": 305,
-      "timestamp": "2025-11-06T23:25:04.094151",
+      "response_size": 304,
+      "timestamp": "2025-11-07T02:44:25.506464",
       "response_data": {
         "nome": "LUIS FILIPE ARAUJO AMARAL",
         "inscricao": "101943PR",
         "seccional": "CONSELHO SECCIONAL - PARANÁ",
         "subsecao": null,
         "categoria": "SUPLEMENTAR",
-        "endereco_profissional": "AVENIDA PAULISTA, Nº 2300 andar Pilotis, Bela Vista, SÃO PAULO - SP 01310300",
+        "endereco_profissional": "AVENIDA PAULISTA, Nº 2300 andar Pilotis, Bela Vista SÃO PAULO - SP 01310300",
         "situacao": "SITUAÇÃO REGULAR"
       }
     },
     {
-      "index": 3,
+      "index": 2,
       "pdf_file": "oab_3.pdf",
       "label": "carteira_oab",
       "status_code": 201,
-      "response_time_seconds": 2.406,
+      "response_time_seconds": 2.208,
       "success": true,
       "response_size": 211,
-      "timestamp": "2025-11-06T23:25:03.404927",
+      "timestamp": "2025-11-07T02:44:24.743103",
       "response_data": {
         "nome": "SON GOKU",
         "inscricao": "101943",
@@ -99,14 +68,14 @@
       }
     },
     {
-      "index": 4,
+      "index": 3,
       "pdf_file": "tela_sistema_1.pdf",
       "label": "tela_sistema",
       "status_code": 201,
-      "response_time_seconds": 3.014,
+      "response_time_seconds": 2.414,
       "success": true,
       "response_size": 199,
-      "timestamp": "2025-11-06T23:25:04.012616",
+      "timestamp": "2025-11-07T02:44:24.948921",
       "response_data": {
         "data_base": "05/09/2025",
         "data_verncimento": "12/10/2025",
@@ -118,14 +87,14 @@
       }
     },
     {
-      "index": 5,
+      "index": 4,
       "pdf_file": "tela_sistema_2.pdf",
       "label": "tela_sistema",
       "status_code": 201,
-      "response_time_seconds": 1.633,
+      "response_time_seconds": 1.585,
       "success": true,
       "response_size": 142,
-      "timestamp": "2025-11-06T23:25:02.632108",
+      "timestamp": "2025-11-07T02:44:24.120510",
       "response_data": {
         "pesquisa_por": "CLIENTE",
         "pesquisa_tipo": "CPF",
@@ -135,17 +104,17 @@
       }
     },
     {
-      "index": 6,
+      "index": 5,
       "pdf_file": "tela_sistema_3.pdf",
       "label": "tela_sistema",
       "status_code": 201,
-      "response_time_seconds": 1.176,
+      "response_time_seconds": 1.456,
       "success": true,
-      "response_size": 89,
-      "timestamp": "2025-11-06T23:25:02.175373",
+      "response_size": 97,
+      "timestamp": "2025-11-07T02:44:23.991847",
       "response_data": {
-        "data_referencia": null,
-        "selecao_de_parcelas": null,
+        "data_referencia": "25/03/2030",
+        "selecao_de_parcelas": "96",
         "total_de_parcelas": null
       }
     }

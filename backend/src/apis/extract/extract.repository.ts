@@ -45,7 +45,7 @@ export class ExtractRepository {
         apiKey: process.env.OPENAI_API_KEY,
         model: "gpt-5-mini-2025-08-07",
         reasoning: {
-            effort: "low"
+            effort: "minimal"
         }
     });
     

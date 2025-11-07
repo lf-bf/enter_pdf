@@ -11,7 +11,7 @@ Uma aplicação NestJS para extração inteligente de informações de documento
     - [Passo a Passo de Instalação](#passo-a-passo-de-instalação)
   - [Testando os Endpoints com Script Python](#testando-os-endpoints-com-script-python)
     - [Executando os Testes](#executando-os-testes)
-    - [Endpoints extras (curiosidade)](#endpoints-extras-curiosidade)
+    - [Endpoints extras (curiosidade) - necessário chave de API sem restrições](#endpoints-extras-curiosidade---necessário-chave-de-api-sem-restrições)
     - [Parâmetros Disponíveis](#parâmetros-disponíveis)
     - [Resultados dos Testes](#resultados-dos-testes)
     - [Estrutura da Requisição](#estrutura-da-requisição)
@@ -49,27 +49,31 @@ cd enter_pdf
 2. **Configure as variáveis de ambiente**
 ```bash
 # Edite o arquivo .env mock dentro de /backend
-OPENAI_API_KEY = api_key_enter
+OPENAI_API_KEY = "api_key_enter"
 
 ```
 
 3. **Prepare a pasta de PDFs e o arquivo JSON**
-- Coloque todos os Pdf's necessários para avaliação na pasta "pdfs".
+- Coloque todos os Pdf's necessários para avaliação na pasta "pdfs" (Tem que ser esta pasta se não o Docker não irá conseguir ler os pdfs).
 - Carregue o arquivo dataset.json, caso tenha um outro nome, você poderá passar o parametro --dataset e especificar o caminho desejado para o arquivo.
   
 - **Importante** ressaltar que o arquivo dataset.json segue o mesmo exemplo proposto pela Enter no repositório de exemplo fornecido, ou seja o pdf_path, deve apenas incluir o nome do arquivo, pois o script já está lendo e colocando o path correto de acordo com a pasta "pdfs". (Isso é bem importante se não o Docker não possui acesso aos arquivos)
 
 4. **Build e execute o container**
 ```bash
-# Build e executar em uma única linha
+# Build e executar em uma única linha (~3 minutos)
 docker-compose up -d --build
 
 # Verificar logs (interessante para uma análise mais detalhada sobre o que está acontencendo no Backend)
 docker-compose logs -f
 ```
-5. **Instale as dependências do python**
-6. 
-7. **Rode o Script para testar o Endpoint principal do desafio**
+
+5. **Instale as dependências do Python**
+```bash
+pip install -r requirements.txt
+```
+
+6. **Rode o Script para testar o Endpoint principal do desafio**
 ```bash
 python test_endpoints.py --endpoint main 
 ```
@@ -90,7 +94,7 @@ O projeto inclui um script de teste assíncrono (`test_endpoints.py`) que permit
 python test_endpoints.py --endpoint main
 ```
 
-### Endpoints extras (curiosidade)
+### Endpoints extras (curiosidade) - necessário chave de API sem restrições
 ```bash
 # Teste do endpoint otimizado (GPT-4o-mini com embeddings)
 python test_endpoints.py --endpoint optmized
@@ -211,7 +215,7 @@ O sistema suporta schemas complexos e aninhados para diferentes tipos de documen
 
 ## O Problema Identificado e Soluções Implementadas
 
-Durante o desenvolvimento, identifiquei um "problema" com o modelo GPT-5-mini da OpenAI, que apresentava latências de aproximadamente 20 segundos para respostas simples. A solução foi ajustar o parâmetro `effort` para `low`, pois se trata de um modelo da família Reasoning da OpenAI que requer configuração específica para otimização de performance. Ajustei para Low pois para `minimal` há um sacrificio muito grande de performance e interpretabilidade do modelo, mas claro há um ganho muito considerável de latência (~4/5 segundos) enquanto com low adquiro ~6/8 segundos. (Confira os results_examples para uma análise mais detalhada, os 2 primeiros arquivos comparam claramente esse custo de performance vs tempo de processamento)
+Durante o desenvolvimento, identifiquei um "problema" com o modelo GPT-5-mini da OpenAI, que apresentava latências de aproximadamente 20 segundos para respostas simples. A solução foi ajustar o parâmetro `effort` para `minimal`, pois se trata de um modelo da família Reasoning da OpenAI que requer configuração específica para otimização de performance. Ajustei para Low para avaliar diferenças com o `minimal`  e ainda que muito sutil, há um sacrificio de performance e interpretabilidade do modelo, mas claro há um ganho muito considerável de latência (~4/5 segundos) enquanto com low adquiro ~6/9 segundos. (Confira os results_examples para uma análise mais detalhada, os 2 primeiros arquivos comparam claramente esse custo de performance vs tempo de processamento).
 
 ### Otimização de Custos e Tokens
 
